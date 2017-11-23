@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    //navigationBar透明度
+//    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    ViewController *vc = [[ViewController alloc] init];
+    UINavigationController *naVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = naVC;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
