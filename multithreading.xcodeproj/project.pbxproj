@@ -15,6 +15,7 @@
 		4733BAEF1FC5D060005DBAD3 /* PthreadsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4733BAEE1FC5D060005DBAD3 /* PthreadsVC.m */; };
 		4733BAF21FC5D20D005DBAD3 /* NSThreadVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4733BAF11FC5D20D005DBAD3 /* NSThreadVC.m */; };
 		4733BAF61FC6C800005DBAD3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4733BAF51FC6C800005DBAD3 /* Launch Screen.storyboard */; };
+		4733BAF91FC710B1005DBAD3 /* GCDVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4733BAF81FC710B1005DBAD3 /* GCDVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		4733BAF01FC5D20D005DBAD3 /* NSThreadVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSThreadVC.h; sourceTree = "<group>"; };
 		4733BAF11FC5D20D005DBAD3 /* NSThreadVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSThreadVC.m; sourceTree = "<group>"; };
 		4733BAF51FC6C800005DBAD3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		4733BAF71FC710B1005DBAD3 /* GCDVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDVC.h; sourceTree = "<group>"; };
+		4733BAF81FC710B1005DBAD3 /* GCDVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				4733BAEE1FC5D060005DBAD3 /* PthreadsVC.m */,
 				4733BAF01FC5D20D005DBAD3 /* NSThreadVC.h */,
 				4733BAF11FC5D20D005DBAD3 /* NSThreadVC.m */,
+				4733BAF71FC710B1005DBAD3 /* GCDVC.h */,
+				4733BAF81FC710B1005DBAD3 /* GCDVC.m */,
 				4733BADD1FC5CF23005DBAD3 /* Main.storyboard */,
 				4733BAE01FC5CF23005DBAD3 /* Assets.xcassets */,
 				4733BAF51FC6C800005DBAD3 /* Launch Screen.storyboard */,
@@ -155,6 +160,7 @@
 				4733BADC1FC5CF23005DBAD3 /* ViewController.m in Sources */,
 				4733BAF21FC5D20D005DBAD3 /* NSThreadVC.m in Sources */,
 				4733BAE71FC5CF23005DBAD3 /* main.m in Sources */,
+				4733BAF91FC710B1005DBAD3 /* GCDVC.m in Sources */,
 				4733BAD91FC5CF23005DBAD3 /* AppDelegate.m in Sources */,
 				4733BAEF1FC5D060005DBAD3 /* PthreadsVC.m in Sources */,
 			);

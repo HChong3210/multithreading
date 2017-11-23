@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Pthreads";
-    self.view.backgroundColor = [UIColor colorWithRed:0.6 green:1 blue:0.5 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:0.5 green:0.8 blue:0.8 alpha:1];
     [self pthreadsDoTask];
 }
 

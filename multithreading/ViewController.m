@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "PthreadsVC.h"
 #import "NSThreadVC.h"
+#import "GCDVC.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -22,7 +23,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
-    self.title = @"主页面";
     [self.tableView reloadData];
 }
 
@@ -73,6 +73,11 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+        case 2: {
+            GCDVC *vc = [[GCDVC alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
         default:
             break;
     }
@@ -91,7 +96,8 @@
 - (NSArray *)dataArray {
     if (!_dataArray) {
         _dataArray = @[@"Pthreads",
-                       @"NSThread"];
+                       @"NSThread",
+                       @"GCD"];
     }
     return _dataArray;
 }
