@@ -10,6 +10,7 @@
 #import "PthreadsVC.h"
 #import "NSThreadVC.h"
 #import "GCDVC.h"
+#import "OperationVC.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -78,6 +79,11 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+        case 3: {
+            OperationVC *vc = [[OperationVC alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
         default:
             break;
     }
@@ -97,7 +103,8 @@
     if (!_dataArray) {
         _dataArray = @[@"Pthreads",
                        @"NSThread",
-                       @"GCD"];
+                       @"GCD",
+                       @"NSOperation & NSOperationQueue"];
     }
     return _dataArray;
 }
