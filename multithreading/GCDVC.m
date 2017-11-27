@@ -26,8 +26,7 @@
         
     });
     
-    [self groupTest1];
-    
+    [self dispatchSemaphoreDemo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -189,6 +188,96 @@
         color = [UIColor colorWithRed:0.380f green:0.376f blue:0.376f alpha:1.000f];
     });
     return color;
+}
+
+- (void)threadTest {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        //在这里执行耗时的操作
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //在主线程使用上面操作的结果
+        });
+    });
+}
+
+- (void)targetQueeuTest {
+    dispatch_queue_t queue = dispatch_queue_create("test", NULL);
+    dispatch_queue_t queue1 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //把第一个参数的执行优先级设置的和第二个参数的优先级一致.
+    dispatch_set_target_queue(queue, queue1);
+}
+
+- (void)applyTest {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_apply(10, queue, ^(size_t index) {
+        //并行处理10次任务
+        NSLog(@"%zu", index);
+    });
+    
+    /*
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    //在全局并行队列中异步执行
+    dispatch_async(queue, ^{
+        //等待函数中操作全部执行完毕
+        dispatch_apply(10, queue, ^(size_t index) {
+            //并行处理10次任务
+            sleep(2);
+            NSLog(@"%zu", index);
+        });
+        
+        //dispatch_apply中的处理全部结束, 在主线程异步执行
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Done");
+        });
+    });
+     */
+}
+
+- (void)barrierTest {
+    
+    //此处的队列只能使用自定义的并行队列, 系统提供的全局队列不行
+    dispatch_queue_t queue = dispatch_queue_create("barrierTest", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_async(queue, ^{
+        NSLog(@"1");
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"2");
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"3");
+    });
+    dispatch_barrier_async(queue, ^{
+        sleep(3);
+        NSLog(@"插入执行");
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"4");
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"5");
+    });
+}
+
+- (void)dispatchSemaphoreDemo {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSMutableArray *array = [NSMutableArray array];
+    
+    //设置信号量初始值, 当信号量为0时, 所有任务等待, 信号量越大, 允许可并行执行的任务数量越多. 并发的线程由系统调配, 不一定一直是同样的两条, 但是最多只能同时存在两条.
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(2);
+    for (int i = 0; i < 100; i++) {
+        
+        //当信号量大于等于设定的初始值时就继续执行, 否则一直等待
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_async(queue, ^{
+            //执行到这里就代表信号量大于等于设定的初始值, 所以在这里信号量要减1
+            NSLog(@"%d+++++%@", i, [NSThread currentThread]);
+            [array addObject:@(i)];
+            //到这里的时候, 因为异步任务已经将要结束, 要将信号量加1. 如果前面有等待的线程, 最先等待的线程先执行
+            dispatch_semaphore_signal(semaphore);
+        });
+    }
 }
 
 @end
