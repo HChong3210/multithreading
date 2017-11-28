@@ -26,7 +26,7 @@
         
     });
     
-    [self timerDemo];
+    [self case5];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -323,17 +323,42 @@
 }
 
 - (void)case3 {
-    dispatch_queue_t serialQueue = dispatch_queue_create("com.starming.gcddemo.serialqueue", DISPATCH_QUEUE_SERIAL);
-    NSLog(@"1");
-    dispatch_async(serialQueue, ^{
-        NSLog(@"2");
-        //串行队列里面同步一个串行队列就会死锁
-        dispatch_sync(serialQueue, ^{
-            NSLog(@"3");
+    dispatch_queue_t queue = dispatch_queue_create("com.demo.serialQueue", DISPATCH_QUEUE_SERIAL);
+    NSLog(@"1"); // 任务1
+    dispatch_async(queue, ^{
+        NSLog(@"2"); // 任务2
+        dispatch_sync(queue, ^{
+            NSLog(@"3"); // 任务3
         });
-        NSLog(@"4");
+        NSLog(@"4"); // 任务4
     });
-    NSLog(@"5");
+    NSLog(@"5"); // 任务5
+}
+
+- (void)case4 {
+    NSLog(@"1"); // 任务1
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSLog(@"2"); // 任务2
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            NSLog(@"3"); // 任务3
+        });
+        NSLog(@"4"); // 任务4
+    });
+    NSLog(@"5"); // 任务5
+}
+
+- (void)case5 {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSLog(@"1"); // 任务1
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            NSLog(@"2"); // 任务2
+        });
+        NSLog(@"3"); // 任务3
+    });
+    NSLog(@"4"); // 任务4
+    while (1) {
+    }
+    NSLog(@"5"); // 任务5
 }
 
 
