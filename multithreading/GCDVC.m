@@ -26,7 +26,7 @@
         
     });
     
-    [self case3];
+    [self timerDemo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -280,6 +280,31 @@
     }
 }
 
+- (void)timerDemo {
+    NSLog(@"%@", [NSThread currentThread]);
+    //指定DISPATCH_SOURCE_TYPE_TIMER类型, 作成Dispatch Source
+    
+    //在定时器经过指定时间, 把任务追加到main queue
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    
+    //定时器的相关设置, 将定时器设置为5s后, 不指定为重复, 允许延迟1s
+    dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, 5ull * NSEC_PER_SEC), DISPATCH_TIME_FOREVER, 1ull * NSEC_PER_SEC);
+    
+    //指定定时器指定时间内执行的处理
+    dispatch_source_set_event_handler(timer, ^{
+        NSLog(@"wake up");
+        dispatch_source_cancel(timer);
+    });
+    
+    //取消定时器时的处理
+    dispatch_source_set_cancel_handler(timer, ^{
+        NSLog(@"canceled");
+    });
+    
+    //定时器启动
+    dispatch_resume(timer);
+}
+
 - (void)case1 {
     NSLog(@"之前 - %@", [NSThread currentThread]);
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -310,5 +335,7 @@
     });
     NSLog(@"5");
 }
+
+
 
 @end
